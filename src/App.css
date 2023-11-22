@@ -36,15 +36,32 @@
     transform: rotate(360deg);
   }
 }
-
-.User {
-  background-color: lightgray;
+.Header > div {
   height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
+  
 }
 
-.User > div {
+.Header > div > div {
   margin-right: 10px;
+  height: auto;
+}
+
+.User {
+  background-color: lightgray;
+  
+}
+
+.Subjects {
+  background-color: cadetblue;
+}
+
+.Subjects > h3 {
+  width: 100px;
+}
+
+.Subjects > h3 > a {
+  font-size: large;
 }
