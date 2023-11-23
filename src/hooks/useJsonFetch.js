@@ -1,13 +1,22 @@
-const basicHeaders = {
-    'Content-Type' : 'application/json',
-}
-export default function useJsonFetch(url, method, headers = basicHeaders, body, successMsg = '', failMsg = '') {
-    fetch(url, {
+import { useEffect, useState } from "react"
+
+export default function useJsonFetch(url, method, body) {
+    const [data, setData] = useState({})
+    useEffect(() => {
+        fetch(url, {
             method : method,
-            headers : headers,
+            headers : {
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json',
+            },
             body : JSON.stringify(body)
         })
         .then(res => {
-            return res
+            if(res.ok) {
+                setData(res.json())
+            }
         })
+    }, [url])
+    
+    return data
 }
