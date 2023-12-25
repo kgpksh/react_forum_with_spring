@@ -37,6 +37,11 @@
     transform: rotate(360deg);
   }
 }
+
+.Header {
+  display: block;
+}
+
 .Header > div {
   height: auto;
   display: flex;
@@ -68,7 +73,16 @@
 }
 
 .body {
+  display: block;
+  align-content: center;
+  justify-content: center;
+  max-width: 90%;
+}
+
+.body > div {
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
@@ -109,4 +123,42 @@
   font-size: large;
   font-weight: bold;
   cursor: pointer;
+}
+
+.postList {
+  list-style-type: none;
+  height: fit-content;
+}
+
+.postList > li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
+.postList > li > div {
+  display: flex;
+}
+
+.postList > li > div :nth-child(1) {
+  width: 500px;
+  margin-right: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.postList > li > div :nth-child(2) {
+  width: 100px;
+  margin-right: 20px;
+}
+
+.postList > li > div :nth-child(3) {
+  width: 100px;
+  margin-right: 20px;
+}
+
+.postList > li > div :nth-child(4) {
+  width: 50px;
 }

@@ -18,7 +18,7 @@ export default function BigSubjectList() {
     return(
         <div className="Subjects">
             {subjects.map(subject => (
-                <h3><Link to={'/' + subject}>{subject}</Link></h3>
+                <h3><Link to={'/post?category=' + subject} key={subject}>{subject}</Link></h3>
             ))}
         </div>
     )
