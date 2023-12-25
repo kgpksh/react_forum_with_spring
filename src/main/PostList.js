@@ -5,7 +5,6 @@ import { useLocation, useSearchParams } from "react-router-dom";
 
 export default function PostList() {
     function setPostList(params, direction, nextBigPage) {
-        console.log('파라미터',params)
         axios.get('/post/list',{params: params})
         .then(res => {
             if(!res) {
@@ -19,13 +18,10 @@ export default function PostList() {
             changeOldestId(showingData, direction, nextBigPage)
             setBigPage(nextBigPage)
             setPosts(showingData)
-            console.log('나중 배열', oldestPostId, nextBigPage)
         })
     }
 
-    function changeOldestId(postData, direction, nextBigPage) {
-        const nextOldestId = postData[postData.length - 1]['id']
-        console.log('배열 변경')
+    function changeOldestId(postData, direction) {
             if(direction === 1) {
                 oldestPostId.push(nextOldestId)
                 setOldestPostId([...oldestPostId])
@@ -38,7 +34,6 @@ export default function PostList() {
     }
 
     function moveBigPage(direction) {
-        console.log('초기 배열', oldestPostId, bigPage)
 
         const nextBigPage = bigPage + direction
         
@@ -47,7 +42,6 @@ export default function PostList() {
         }
 
         const oldestId = getOldestId(direction, nextBigPage)
-        console.log('넥스트빅페이지', nextBigPage)
         const params = createListParams(oldestId)
         setPostList(params, direction, nextBigPage)
 
@@ -55,7 +49,6 @@ export default function PostList() {
     }
 
     function createListParams(oldestId) {
-        console.log('파라미터 함수', oldestId)
         const result = {oldestId: oldestId}
         if(searchParams.has('category')){
             result['category'] = searchParams.get('category')
@@ -65,7 +58,6 @@ export default function PostList() {
     }
 
     function getOldestId(direction, nextBigPage) {
-        console.log('올디스트 아이디',nextBigPage, oldestPostId[nextBigPage])
         if(direction === 1) {
             return oldestPostId[nextBigPage]
         }
