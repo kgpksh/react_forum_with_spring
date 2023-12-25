@@ -22,6 +22,7 @@ export default function PostList() {
     }
 
     function changeOldestId(postData, direction) {
+        const nextOldestId = postData[postData.length - 1]['id']
             if(direction === 1) {
                 oldestPostId.push(nextOldestId)
                 setOldestPostId([...oldestPostId])
@@ -122,12 +123,12 @@ export default function PostList() {
                 ))
                 }
             </ul>
-            <div>
+            <div className="jumpPage">
                 <div onClick={() => moveBigPage(-1)}>
                     이전
                 </div>
                 {getSmallPages().map(smallPageNum => (
-                    <div className="smallPageNum" key={smallPageNum} onClick={() => setSmallPage(smallPageNum)}>{smallPageNum}</div>
+                    <div key={smallPageNum} onClick={() => setSmallPage(smallPageNum)}>{smallPageNum}</div>
                 ))}
                 <div onClick={() => moveBigPage(1)}>
                     다음
