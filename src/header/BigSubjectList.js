@@ -1,24 +1,13 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext } from "react"
 import { Link } from "react-router-dom"
+import { CategoryContext } from "../App"
 
 export default function BigSubjectList() {
-    const [subjects, setSubjects] = useState([])
-    useEffect(() => {
-        axios.get('/category/categoryList')
-        .then(res => {
-            const categoryList = res.data.map(element => element['category'])
-            return categoryList;
-        })
-        .then(categoryList => {
-            setSubjects(categoryList)
-        })
-    },[])
-    
+    const {categories} = useContext(CategoryContext)
     return(
         <div className="Subjects">
-            {subjects.map(subject => (
-                <h3><Link to={'/post?category=' + subject} key={subject}>{subject}</Link></h3>
+            {categories.map(category => (
+                <h3><Link to={'/post?category=' + category} key={category}>{category}</Link></h3>
             ))}
         </div>
     )
