@@ -115,13 +115,13 @@ export default function PostList() {
                 }
             </ul>
             <div className="jumpPage">
-                <div onClick={() => moveBigPage(-1)}>
+                <div className="smallPageButton" onClick={() => moveBigPage(-1)}>
                     이전
                 </div>
                 {getSmallPages().map(smallPageNum => (
-                    <div key={smallPageNum} onClick={() => setSmallPage(smallPageNum)}>{smallPageNum}</div>
+                    <div key={smallPageNum} className={smallPageNum === smallpage ? 'smallPageSelected' : 'smallPageButton'} onClick={() => setSmallPage(smallPageNum)}>{smallPageNum}</div>
                 ))}
-                <div onClick={() => moveBigPage(1)}>
+                <div className="smallPageButton" onClick={() => moveBigPage(1)}>
                     다음
                 </div>
             </div>
