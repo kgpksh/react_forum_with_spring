@@ -1,9 +1,54 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PostListElement from "./PostListElement";
 import { useLocation, useSearchParams } from "react-router-dom";
 
 export default function PostList() {
+    function moveBigPage(direction) {
+
+        const nextBigPage = bigPage.current + direction
+        if(!checkMoveBigPage(nextBigPage, direction)) {
+            return false
+        }
+
+        const oldestId = oldestPostId.current[nextBigPage]
+        const params = createListParams(oldestId)
+        setPostList(params, direction, nextBigPage)
+
+        setSmallPage(1)
+    }
+
+    function checkMoveBigPage(nextBigPage, direction) {
+        if(direction === -1) {
+            if(nextBigPage < 0) {
+                return false;
+            }
+            return true;
+        }
+
+        if(direction === 1) {
+            if(bigPage.current === -1) {
+                return true
+            }
+
+            const smallPagesCount = parseInt(posts.length / singleSmallPageSize)
+            if(smallPagesCount < smallPagesInView) {
+                return false;
+            }
+
+            return true
+        }
+    }
+
+    function createListParams(oldestId) {
+        const result = {oldestId: oldestId}
+        if(searchParams.has('category')){
+            result['category'] = searchParams.get('category')
+        }
+        
+        return result
+    }
+
     function setPostList(params, direction, nextBigPage) {
         axios.get('/post/list',{params: params})
         .then(res => {
@@ -16,7 +61,7 @@ export default function PostList() {
         })
         .then(showingData => {
             changeOldestId(showingData, direction, nextBigPage)
-            setBigPage(nextBigPage)
+            bigPage.current = nextBigPage
             setPosts(showingData)
         })
     }
@@ -24,68 +69,12 @@ export default function PostList() {
     function changeOldestId(postData, direction) {
         const nextOldestId = postData[postData.length - 1]['id']
             if(direction === 1) {
-                oldestPostId.push(nextOldestId)
-                setOldestPostId([...oldestPostId])
+                oldestPostId.current.push(nextOldestId)
                 return true
             }
 
-            oldestPostId.pop()
-            oldestPostId[bigPage] = nextOldestId
-            setOldestPostId([...oldestPostId])
-    }
-
-    function moveBigPage(direction) {
-
-        const nextBigPage = bigPage + direction
-        
-        if(!checkMoveBigPage(nextBigPage, direction)) {
-            return false
-        }
-
-        const oldestId = getOldestId(direction, nextBigPage)
-        const params = createListParams(oldestId)
-        setPostList(params, direction, nextBigPage)
-
-        setSmallPage(1)
-    }
-
-    function createListParams(oldestId) {
-        const result = {oldestId: oldestId}
-        if(searchParams.has('category')){
-            result['category'] = searchParams.get('category')
-        }
-        
-        return result
-    }
-
-    function getOldestId(direction, nextBigPage) {
-        if(direction === 1) {
-            return oldestPostId[nextBigPage]
-        }
-
-        return oldestPostId[nextBigPage]
-    }
-
-    function checkMoveBigPage(nextBigPage, direction) {
-        if(direction === -1) {
-            if(nextBigPage < 0) {
-                return false;
-            }
-            return true;
-        }
-
-        if(direction === 1) {
-            if(bigPage === -1) {
-                return true
-            }
-
-            const smallPagesCount = parseInt(posts.length / singleSmallPageSize)
-            if(smallPagesCount < smallPagesInView) {
-                return false;
-            }
-
-            return true
-        }
+            oldestPostId.current.pop()
+            oldestPostId.current[bigPage] = nextOldestId
     }
 
     function getSmallPages() {
@@ -101,18 +90,20 @@ export default function PostList() {
         return smallPages;
     }
 
-    const [bigPage, setBigPage] = useState(-1)
     const [posts, setPosts] = useState([])
     const [smallpage, setSmallPage] = useState(1)
     const singleSmallPageSize = 50
     const smallPagesInView = 10
-    const [oldestPostId, setOldestPostId] = useState([-1])
-    const [searchParams, setSearchParams]=useSearchParams();
-    const [location, setLocation] = useState(useLocation())
+    const bigPage = useRef(-1)
+    const oldestPostId = useRef([-1])
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { search } = useLocation();
     
     useEffect(() => {
+        bigPage.current = -1
+        oldestPostId.current = [-1]
         moveBigPage(1)
-    }, [])
+    }, [search, searchParams])
 
     return (
         <div>
