@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import PostListElement from "./PostListElement";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams, Link } from "react-router-dom";
+import checkJwtExpired from "../utils/checkJwtExpired";
 
 export default function PostList() {
     function moveBigPage(direction) {
@@ -98,8 +99,10 @@ export default function PostList() {
     const oldestPostId = useRef([-1])
     const [searchParams, setSearchParams] = useSearchParams();
     const { search } = useLocation();
+    const [isLogin, setIsLogin] = useState()
     
     useEffect(() => {
+        setIsLogin(checkJwtExpired())
         bigPage.current = -1
         oldestPostId.current = [-1]
         moveBigPage(1)
@@ -124,6 +127,14 @@ export default function PostList() {
                 <div className="smallPageButton" onClick={() => moveBigPage(1)}>
                     다음
                 </div>
+                {searchParams.has('category') && !isLogin &&
+                    <Link to='/post/edit' state = {{'category' : searchParams.get('category'), 'title' : null, 'content' : null}}>
+                        <button>
+                            글쓰기
+                        </button>
+                    </Link>
+                }
+                
             </div>
         </div>
     )
