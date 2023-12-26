@@ -16,6 +16,7 @@ export default function Login() {
             alert(res.data.resultMsg)
             if(res.data.successLogin) {
                 localStorage.setItem('jwtToken', res.data.token)
+                localStorage.setItem('username', idRef.current.value)
                 history('/')
                 return
             }
