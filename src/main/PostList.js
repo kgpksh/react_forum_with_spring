@@ -57,7 +57,7 @@ export default function PostList() {
                 return []
             }
             return res.data.map(element => (
-               {id : element['id'], title : element['title'], author : element['author'], lastModifiedDate : formatDateTime(element['last_modified_date']), view : element['view']}
+               {category:element['category'], id : element['id'], title : element['title'], author : element['author'], lastModifiedDate : formatDateTime(element['last_modified_date']), view : element['view']}
             ))
         })
         .then(showingData => {
