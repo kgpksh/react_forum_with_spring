@@ -21,7 +21,7 @@ function App() {
         .then(categoryList => {
             setCategories(categoryList)
         })
-    })
+    }, [])
 
   return (
     <BrowserRouter>
