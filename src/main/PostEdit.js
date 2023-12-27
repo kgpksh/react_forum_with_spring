@@ -29,7 +29,7 @@ export default function PostEdit() {
                 <input type="text" placeholder="제목을 입력하세요" ref={titleRef} maxLength={30} defaultValue={title}/>
             </div>
             <div className="contentInput">
-                <input type="text" placeholder="내용을 입력하세요" ref={contentRef} defaultValue={content}/>
+                <textarea type="text" placeholder="내용을 입력하세요" ref={contentRef} defaultValue={content}/>
             </div>
             <div id="postSave">
                 <button>저장</button>
