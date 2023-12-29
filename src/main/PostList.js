@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import PostListElement from "./PostListElement";
 import { useLocation, useSearchParams, Link } from "react-router-dom";
 import checkJwtExpired from "../utils/checkJwtExpired";
+import formDateTime from "../utils/formatDateTime";
 
 export default function PostList() {
     function moveBigPage(direction) {
@@ -57,7 +58,7 @@ export default function PostList() {
                 return []
             }
             return res.data.map(element => (
-               {category:element['category'], id : element['id'], title : element['title'], author : element['author'], lastModifiedDate : formatDateTime(element['last_modified_date']), view : element['view']}
+               {category:element['category'], id : element['id'], title : element['title'], author : element['author'], lastModifiedDate : formDateTime(element['last_modified_date']), view : element['view']}
             ))
         })
         .then(showingData => {
@@ -65,19 +66,6 @@ export default function PostList() {
             bigPage.current = nextBigPage
             setPosts(showingData)
         })
-    }
-
-    function formatDateTime(rawDateTime) {
-        let date = new Date(rawDateTime);
-
-        let year = date.getFullYear();
-        let month = ("0" + (date.getMonth() + 1)).slice(-2);
-        let day = ("0" + date.getDate()).slice(-2);
-        let hours = ("0" + date.getHours()).slice(-2);
-        let minutes = ("0" + date.getMinutes()).slice(-2);
-        let seconds = ("0" + date.getSeconds()).slice(-2);
-
-        return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
     }
 
     function changeOldestId(postData, direction) {
