@@ -7,6 +7,7 @@ import PostList from './main/PostList';
 import PostEdit from './main/PostEdit';
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import PostView from './main/PostView';
 
 export const CategoryContext = createContext()
 
@@ -35,6 +36,7 @@ function App() {
               <Route exact path = '/' element = {<PostList></PostList>}></Route>
               <Route exact path = '/post' element = {<PostList></PostList>}></Route>
               <Route exact path = '/post/edit' element = {<PostEdit></PostEdit>}></Route>
+              <Route exact path = '/post/view' element = {<PostView></PostView>}></Route>
             </Routes>
           </body>
         </div>

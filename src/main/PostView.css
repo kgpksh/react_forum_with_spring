@@ -1,0 +1,126 @@
+.postView {
+    width: 100%;
+    height: 100%;
+}
+
+.postView > div {
+    width: 100%;
+    height: 100%;
+}
+
+.postView textarea {
+    resize: none;
+    outline: 0;
+    border: none;
+  }
+
+.postTitle {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.postMetadata {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.postMetadata > .left {
+    margin-right: auto;
+    justify-content: center;
+}
+
+.postMetadata > .right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.postMetadata > .right > div {
+    margin-right: 10%;
+}
+
+.postContent {
+    margin-top: 5%;
+    min-height: 30%;
+    width: 100%;
+    font-size: medium;
+    text-align: start;
+}
+
+.comment {
+    width: 100%;
+    list-style-type: none;
+    padding: 0;
+}
+
+.comment > li{
+    border-top: solid  rgb(222, 228, 231);
+    border-top-width: thin;
+    border-bottom: solid  rgb(222, 228, 231);
+    border-bottom-width: thin;
+    padding: 1%;
+}
+
+
+.comment > li > div:nth-child(1) {
+    display: flex;
+    width: 30%;
+    justify-content: space-around;
+}
+
+.comment > li > div:nth-child(2) {
+    margin-top: 1%;
+    text-align: start;
+    height: max-content;
+}
+
+.comment > li > form.commentModifying {
+    display: flex;
+    width: 100%;
+}
+
+.commentModifying textarea {
+    outline: auto;
+    font-size: large;
+    text-align: start;
+    flex: 8;
+    min-height: 100px;
+    height: fit-content;
+    width: 100%;
+}
+
+
+.commentModifying:nth-child(2) {
+    height: 100%;
+    align-items: center;
+    flex: 2;
+
+}
+.commentModifying > div {
+    margin-left: 10px;
+}
+
+.commentModifying > div > button {
+    height: 70px;
+}
+
+#newComment {
+    display: flex;
+    justify-content: center;
+}
+
+#newComment > textarea{
+    width: 90%;
+    outline: auto;
+    height: 70px;
+    margin-right: 15px;
+    font-size: large;
+}
