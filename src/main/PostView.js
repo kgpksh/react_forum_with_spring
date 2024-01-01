@@ -7,14 +7,16 @@ import PostComments from "./PostComments";
 export const CommentContext = createContext()
 
 export default function PostView() {
-    const {id, category, author, title, lastModifiedDate, view} = useLocation().state
+    const {id, category, author, title, lastModifiedDate} = useLocation().state
     const [content, setContent] = useState('')
     const [comments, setComments] = useState([])
+    const [view, setView] = useState(0)
 
     function getContentAndComments() {
         axios.get('/post/view', {params : {postId : id}})
         .then(res => {
             setContent(res.data['content'])
+            setView(res.data['view'])
             setComments(res.data['comments'])
         })
     }
